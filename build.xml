@@ -6,7 +6,7 @@
 	<property name="doc.dir"         value="doc" />
 	<property name="src.dir"         value="src" />
 	<property name="build.dir"       value="classes" />
-	
+
 	<property environment="env"/>
 	<property file="build.properties"/>
 	<property name="project" value="memcached"/>
@@ -21,6 +21,7 @@
 		<tar tarfile="memcached-${ver}.tar.gz" basedir="." includes="memcached-${ver}/**" compression="gzip"/>
 		<zip destfile="memcached-${ver}.zip" basedir="." includes="memcached-${ver}/**"/>
 		<copy file="memcached-${ver}/memcached-${ver}.jar" todir="."/>
+		<copy file="memcached-${ver}/memcached-${ver}-sources.jar" todir="."/>
 
 		<checksum file="memcached-${ver}.tar.gz"/>
 		<checksum file="memcached-${ver}.zip"/>
@@ -97,7 +98,7 @@
 			doctitle="&lt;h1&gt;${project.title} documentation (Version ${ver})&lt;/h1&gt;"
 			bottom="Copyright &#169; 2005 - greg whalin">
     	</javadoc>
-	</target> 
+	</target>
 
 	<!-- compilation target for packeging operations -->
 	<target name="pkg-compile" depends="clean, setup, log4j, logger">
@@ -108,6 +109,9 @@
 
 	<target name="jar" depends="pkg-compile">
 		<jar compress="yes" jarfile="memcached-${ver}/memcached-${ver}.jar" basedir="memcached-${ver}/classes"/>
+		<jar compress="yes" jarfile="memcached-${ver}/memcached-${ver}-sources.jar">
+                    <fileset dir="${src.dir}" includes="**/*.java"/>
+                </jar>
     </target>
 
 	<!-- compilation target -->
